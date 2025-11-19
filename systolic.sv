@@ -14,7 +14,6 @@ module systolic
     input adder_en,
     
     
-    input [23:0]psum[N-1:0],
     input [7:0]weight[N-1:0],
     input [7:0]I[N-1:0],
     
@@ -36,7 +35,7 @@ module systolic
                 
                 //psum
                 if(i==0) begin
-                    assign p_in_curr = psum[j];
+                    assign p_in_curr = 24'b0;
                 end else begin
                     assign p_in_curr = wire_psum_out[i-1][j];
                 end
