@@ -9,7 +9,19 @@ module datapath (
     
     input i_cnt, j_cnt, h_cnt,
     input base_cal,
-    input [1:0] sel_addr
+    input [1:0] sel_addr,
+    
+    input [3:0] bi2_sel,
+    input [3:0] bi1_o_sel,
+    input [1:0] addr_sel,
+    input [1:0] dout_sel,
+    input [1:0] w_sel,
+    input [1:0] i_sel,
+    input [1:0] fpo_sel,
+    
+    input [23:0] dout_mem,
+    output [23:0] din_mem,
+    output [23:0] addr_mem
 );
 
     wire [6:0]  b, c;
@@ -18,29 +30,19 @@ module datapath (
     wire [23:0] bi1, bi2, bo;
     wire [23:0] bi1_q, bi2_q, bo_q;
     wire [23:0] addr_in2, addr_in1, addr_out;
-    wire [23:0] addr_mem;
-    wire [23:0] bi2_val;
-    wire [23:0] bi1_o_val;
     
     wire [7:0] weight_o, in_o;
     wire [7:0] weight [15:0];
     wire [7:0] in [15:0];
     wire [23:0] pe_output [15:0];
-    wire [23:0] din_mem, dout_mem;
+    
     wire [23:0] result;
     wire [23:0] f_result, f_result_q;
     wire [23:0] f_pe_output;
+    wire [23:0] bi2_val;
+    wire [23:0] bi1_o_val;
     
-    wire [3:0] bi2_sel;
-    wire [1:0] bi1_o_sel;
-    wire [1:0] addr_sel;
-    wire [1:0] dout_sel;
-    wire [1:0] w_sel;
-    wire [1:0] i_sel;
-    wire [1:0] fpo_sel;
-    
-    
-    
+
     assign b = N[9:2];
     assign c = K[9:2];
     
