@@ -30,6 +30,7 @@ The core innovation of this project is the DiP dataflow, which features two main
 The system is designed using a Finite State Machine with Datapath (FSMD) model, separating the control logic from the computational logic.
 
 1. Datapath Architecture
+
 The datapath manages the flow of matrices from the Block RAM (BRAM) through the Processing Elements (PEs) and back. It consists of the following subsystems:
 
  - Address Generation Unit: Calculates dynamic memory addresses for continuous data streaming.
@@ -41,6 +42,7 @@ The datapath manages the flow of matrices from the Block RAM (BRAM) through the 
 // them anh 11.png
 
 2. Finite State Machine (FSM) Controller
+
 The Control Unit is a robust 59-state FSM that orchestrates the entire matrix multiplication process, coordinating the i, j, and h loops of the tiled algorithm.
 
 To hide memory latency and maximize PE utilization, the FSM implements a 3-layer pipeline:
@@ -53,11 +55,31 @@ To hide memory latency and maximize PE utilization, the FSM implements a 3-layer
 
 ## Performance & FPGA Implementation
 
-The design was fully verified via Behavioral Simulation (ModelSim/Vivado) and deployed on hardware using **Xilinx ILA/VIO** (Integrated Logic Analyzer / Virtual Input/Output).
+The design was fully verified via Behavioral Simulation and deployed on hardware using **Xilinx ILA/VIO** (Integrated Logic Analyzer / Virtual Input/Output). Below are the post-implementation reports extracted from Xilinx Vivado.
 
-| Metric / Parameter | Value / Result |
+### 1. Post-Implementation Timing Summary
+The design successfully met all timing constraints at a target clock frequency of **100 MHz**.
+
+| Setup (Max Delay) | Hold (Min Delay) |
 | :--- | :--- |
-| **Operating Frequency** | 100 MHz |
-| **Timing Closure** | Met with Positive Slack (WNS: 1.173 ns, WHS: 0.018 ns) |
-| **Hardware Utilization (4x4)** | 1,725 Slice LUTs (~8.3% of target FPGA) <br> 1 Block RAM Tile |
-| **Scalability (64x64 Projection)** | 8,192 TOPS throughput <br> 9,548 TOPS/W energy efficiency |
+| **WNS** (Worst Negative Slack): `+1.173 ns` | **WHS** (Worst Hold Slack): `+0.018 ns` |
+| **TNS** (Total Negative Slack): `0.000 ns` | **THS** (Total Hold Slack): `0.000 ns` |
+| **Timing Met:** ✅ Yes | **Timing Met:** ✅ Yes |
+
+### 2. Resource Utilization (4x4 Systolic Array)
+*Note: The available resources below are based on the target FPGA board. Please update the '[ ]' fields with your specific Vivado report numbers.*
+
+| Site Type | Used | Available | Utilization (%) |
+| :--- | :--- | :--- | :--- |
+| **Slice LUTs** | 1,725 | [e.g., 20,800] | ~8.3% |
+| **Slice Registers (FF)** | [Value] | [e.g., 41,600] | [Value]% |
+| **Block RAM Tile (BRAM)** | 1 | [e.g., 50] | [Value]% |
+| **DSPs** | [Value] | [e.g., 90] | [Value]% |
+
+### 3. Throughput & Power Scalability
+While the physical implementation was tested on a 4x4 array due to board constraints, theoretical projections for a scaled-up architecture demonstrate the massive efficiency of the DiP dataflow:
+
+| Metric | 4x4 Array (Implementation) | 64x64 Array (Projection) |
+| :--- | :--- | :--- |
+| **Throughput** | [Your 4x4 TOPS] | 8,192 TOPS |
+| **Energy Efficiency** | [Your 4x4 TOPS/W] | 9,548 TOPS/W |
