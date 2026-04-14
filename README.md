@@ -81,4 +81,4 @@ The design successfully met all timing constraints at a target clock frequency o
 | Vu Anh Tuan | Research algorithms and model Systolic arrays using HDL; Design and model Controller using HDL. |
 | Pham Van Duy | Research algorithms and model Systolic arrays using HDL; Write testbenches; Research ILA/VIO; Hardware-based design debugging. |
 
-## Supervisor: Nguyen Kiem Hung, Ph.D. – AICS Lab - VNU-UET.
+## Supervisor: Nguyen Kiem Hung, Ph.D. - AICS Lab - VNU-UET.
