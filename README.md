@@ -25,6 +25,8 @@ The core innovation of this project is the DiP dataflow, which features two main
 
 ![Matrix Tiling Algorithm](image/flow.jpg)
 
+Source: [Abdelmaksoud et al., 2024]([https://arxiv.org/abs/2412.09709])
+
 ## Hardware Architecture & RTL Design
 
 The system is designed using a Finite State Machine with Datapath (FSMD) model, separating the control logic from the computational logic.
@@ -36,6 +38,8 @@ The datapath manages the flow of matrices from the Block RAM (BRAM) through the 
  - Processing Element (PE): A 2-stage pipelined Multiply-Accumulate (MAC) unit with independent control registers for inputs, weights, and accumulation results.
 
 ![Matrix Tiling Algorithm](image/pe.jpg)
+
+Source: [Abdelmaksoud et al., 2024]([https://arxiv.org/abs/2412.09709])
 
  - Address Generation Unit: Calculates dynamic memory addresses for continuous data streaming.
 
