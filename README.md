@@ -41,7 +41,7 @@ The datapath manages the flow of matrices from the Block RAM (BRAM) through the 
 
  - Accumulator (Partial Sum Addition): Retrieves temporarily stored data (partial sums) from memory and adds it to the newly computed MAC results to accumulate the final output matrix.
 
-![Matrix Tiling Algorithm](image/datapath.jpg)
+![Matrix Tiling Algorithm](image/dtp.jpg)
 
 
 ### 2. Finite State Machine (FSM) Controller
