@@ -14,7 +14,7 @@ This project is a hardware realization based on the 2025 IEEE research paper: *D
 ### 1. Matrix Tiling Algorithm
 To handle large matrices on a constrained hardware footprint, we implemented a matrix tiling algorithm. The matrices are divided into smaller blocks (tiles) that fit into our 4x4 on-chip systolic array.
 
-// them anh 4.png
+![Matrix Tiling Algorithm](image/tilling.jpg)
 
 ### 2. The DiP Dataflow
 The core innovation of this project is the DiP dataflow, which features two main mechanisms:
@@ -23,7 +23,7 @@ The core innovation of this project is the DiP dataflow, which features two main
 
  - Diagonal Input Movement: Inputs are fed into the first row and shifted diagonally in subsequent cycles.
 
-// them anh trong bai bao
+![Matrix Tiling Algorithm](image/flow.jpg)
 
 ## Hardware Architecture & RTL Design
 
@@ -33,13 +33,16 @@ The system is designed using a Finite State Machine with Datapath (FSMD) model, 
 
 The datapath manages the flow of matrices from the Block RAM (BRAM) through the Processing Elements (PEs) and back. It consists of the following subsystems:
 
- - Address Generation Unit: Calculates dynamic memory addresses for continuous data streaming.
-
  - Processing Element (PE): A 2-stage pipelined Multiply-Accumulate (MAC) unit with independent control registers for inputs, weights, and accumulation results.
+
+![Matrix Tiling Algorithm](image/pe.jpg)
+
+ - Address Generation Unit: Calculates dynamic memory addresses for continuous data streaming.
 
  - Accumulator (Partial Sum Addition): Retrieves temporarily stored data (partial sums) from memory and adds it to the newly computed MAC results to accumulate the final output matrix.
 
-// them anh 11.png
+![Matrix Tiling Algorithm](image/datapath.jpg)
+
 
 ### 2. Finite State Machine (FSM) Controller
 
