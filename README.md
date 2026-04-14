@@ -3,7 +3,7 @@
 ## Overview
 This repository contains the RTL design, verification, and hardware implementation of a scalable, energy-efficient systolic array based on the **DiP (Diagonal-Input and Permutated weight-stationary)** dataflow. 
 
-While traditional AI hardware accelerators (like TPUs) utilize Weight Stationary (WS) systolic arrays, they heavily rely on synchronous First-In-First-Out (FIFO) buffers for input-output synchronization. These FIFOs consume significant chip area and power. Our implementation of the DiP architecture completely eliminates these synchronization FIFOs, leading to massive improvements in energy efficiency and up to a 50% increase in throughput by maximizing computational resource utilization.
+While traditional AI hardware accelerators (like TPUs) utilize Weight Stationary systolic arrays, they heavily rely on synchronous First-In-First-Out buffers for input-output synchronization. These FIFOs consume significant chip area and power. Our implementation of the DiP architecture completely eliminates these synchronization FIFOs, leading to massive improvements in energy efficiency and up to a 50% increase in throughput by maximizing computational resource utilization.
 
 This project is a hardware realization based on the 2025 IEEE research paper: *DiP: A Scalable, Energy-Efficient Systolic Array for Matrix Multiplication Acceleration*.
 
@@ -11,12 +11,12 @@ This project is a hardware realization based on the 2025 IEEE research paper: *D
 
 ## Algorithm & Dataflow
 
-1. Matrix Tiling Algorithm
+### 1. Matrix Tiling Algorithm
 To handle large matrices on a constrained hardware footprint, we implemented a matrix tiling algorithm. The matrices are divided into smaller blocks (tiles) that fit into our 4x4 on-chip systolic array.
 
 // them anh 4.png
 
-2. The DiP Dataflow
+### 2. The DiP Dataflow
 The core innovation of this project is the DiP dataflow, which features two main mechanisms:
 
  - Weight Matrix Permutation: While the original paper relies on weights being pre-rotated in software prior to loading, our design implements this permutation directly in hardware. We designed custom address generation logic that calculates specific read addresses on-the-fly, fetching the weights from memory in their correctly rotated and shifted order without requiring any software preprocessing.
@@ -29,7 +29,7 @@ The core innovation of this project is the DiP dataflow, which features two main
 
 The system is designed using a Finite State Machine with Datapath (FSMD) model, separating the control logic from the computational logic.
 
-1. Datapath Architecture
+### 1. Datapath Architecture
 
 The datapath manages the flow of matrices from the Block RAM (BRAM) through the Processing Elements (PEs) and back. It consists of the following subsystems:
 
@@ -41,7 +41,7 @@ The datapath manages the flow of matrices from the Block RAM (BRAM) through the 
 
 // them anh 11.png
 
-2. Finite State Machine (FSM) Controller
+### 2. Finite State Machine (FSM) Controller
 
 The Control Unit is a robust 59-state FSM that orchestrates the entire matrix multiplication process, coordinating the i, j, and h loops of the tiled algorithm.
 
@@ -62,24 +62,22 @@ The design successfully met all timing constraints at a target clock frequency o
 
 | Setup (Max Delay) | Hold (Min Delay) |
 | :--- | :--- |
-| **WNS** (Worst Negative Slack): `+1.173 ns` | **WHS** (Worst Hold Slack): `+0.018 ns` |
+| **WNS** (Worst Negative Slack): `+3.682 ns` | **WHS** (Worst Hold Slack): `+0.067 ns` |
 | **TNS** (Total Negative Slack): `0.000 ns` | **THS** (Total Hold Slack): `0.000 ns` |
-| **Timing Met:** ✅ Yes | **Timing Met:** ✅ Yes |
+| **Timing Met:** Yes | **Timing Met:** Yes |
 
 ### 2. Resource Utilization (4x4 Systolic Array)
-*Note: The available resources below are based on the target FPGA board. Please update the '[ ]' fields with your specific Vivado report numbers.*
 
 | Site Type | Used | Available | Utilization (%) |
 | :--- | :--- | :--- | :--- |
-| **Slice LUTs** | 1,725 | [e.g., 20,800] | ~8.3% |
-| **Slice Registers (FF)** | [Value] | [e.g., 41,600] | [Value]% |
-| **Block RAM Tile (BRAM)** | 1 | [e.g., 50] | [Value]% |
-| **DSPs** | [Value] | [e.g., 90] | [Value]% |
+| **LUTs** | 1,694 | 20,800 | ~8.1% |
+| **FF** | 1,201 | 41,600 | ~2.9% |
 
-### 3. Throughput & Power Scalability
-While the physical implementation was tested on a 4x4 array due to board constraints, theoretical projections for a scaled-up architecture demonstrate the massive efficiency of the DiP dataflow:
+## Contributors
 
-| Metric | 4x4 Array (Implementation) | 64x64 Array (Projection) |
-| :--- | :--- | :--- |
-| **Throughput** | [Your 4x4 TOPS] | 8,192 TOPS |
-| **Energy Efficiency** | [Your 4x4 TOPS/W] | 9,548 TOPS/W |
+| Name | Role & Contribution | 
+| Nguyen Tien Dung | Research algorithms for addressing and data flow; Design FSMD; Design and model Datapath using HDL; Design Controller; Software-based design debugging. | 
+| Vu Anh Tuan | Research algorithms and model Systolic arrays using HDL; Design and model Controller using HDL. | 
+| Pham Van Duy | Research algorithms and model Systolic arrays using HDL; Write testbenches; Research ILA/VIO; Hardware-based design debugging. | 
+
+## Supervisor: Nguyen Kiem Hung, Ph.D. – AICS Lab - VNU-UET.
