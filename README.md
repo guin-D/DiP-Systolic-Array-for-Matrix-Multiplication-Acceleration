@@ -76,6 +76,7 @@ The design successfully met all timing constraints at a target clock frequency o
 ## Contributors
 
 | Name | Role & Contribution | 
+| :--- | :--- |
 | Nguyen Tien Dung | Research algorithms for addressing and data flow; Design FSMD; Design and model Datapath using HDL; Design Controller; Software-based design debugging. | 
 | Vu Anh Tuan | Research algorithms and model Systolic arrays using HDL; Design and model Controller using HDL. | 
 | Pham Van Duy | Research algorithms and model Systolic arrays using HDL; Write testbenches; Research ILA/VIO; Hardware-based design debugging. | 
